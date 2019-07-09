@@ -30,7 +30,7 @@ router.post("/", function(req, res){
 	});
 });
 
-// Show
+// Read
 router.get("/:id", function(req, res){
 	Park.findById(req.params.id, function(err, park){
 		if(err){
@@ -63,6 +63,16 @@ router.put("/:id", function(req, res){
 		} else {
 			res.redirect("/parks/" + req.params.id);
 		}
+	});
+});
+
+// Destroy
+router.delete("/:id", function(req, res){
+	Park.findByIdAndRemove(req.params.id, function(err){
+		if(err){
+			console.log(err);
+		}
+		res.redirect("/parks");
 	});
 });
 

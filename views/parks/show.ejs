@@ -17,7 +17,9 @@
 					<h5 class="d-inline-block float-right">$<%= park.price %></h2>
 					<p class="card-text"><%= park.description %></p>
 					<a class="btn btn-sm btn-warning" href="/parks/<%= park.id %>/edit">Edit</a>
-					<a class="btn btn-sm btn-danger" href="#">Delete</a>
+					<form class="d-inline-block" action="/parks/<%= park.id %>?_method=delete" method="POST">
+						<button class="btn btn-sm btn-danger" href="">Delete</a>
+					</form>
 				</div>
 			</div>
 			<div class="card my-3">
