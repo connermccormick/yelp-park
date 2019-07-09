@@ -1,8 +1,9 @@
-const express    = require("express"),
-	  app        = express(),
-	  bodyParser = require("body-parser"),
-	  mongoose   = require("mongoose"),
-	  Park       = require("./models/park");
+const express        = require("express"),
+	  app            = express(),
+	  bodyParser     = require("body-parser"),
+	  methodOverride = require("method-override"),
+	  mongoose       = require("mongoose"),
+	  Park           = require("./models/park");
 
 
 // Require Routes
@@ -21,6 +22,7 @@ mongoose.connect('mongodb://localhost/yelp_park', {
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static('public'));
+app.use(methodOverride("_method"));
 
 
 // Routes

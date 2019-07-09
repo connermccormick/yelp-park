@@ -30,5 +30,40 @@ router.post("/", function(req, res){
 	});
 });
 
+// Show
+router.get("/:id", function(req, res){
+	Park.findById(req.params.id, function(err, park){
+		if(err){
+			console.log(err);
+			res.redirect("/parks");
+		} else {
+			res.render("parks/show", {park: park});
+		}
+	});
+});
+
+// Edit
+router.get("/:id/edit", function(req, res){
+	Park.findById(req.params.id, function(err, park){
+		if(err){
+			console.log(err);
+			res.redirect("/parks");
+		} else {
+			res.render("parks/edit", {park: park});
+		}
+	});
+});
+
+// Update
+router.put("/:id", function(req, res){
+	Park.findByIdAndUpdate(req.params.id, req.body.park, function(err, park){
+		if(err){
+			console.log(err);
+			res.redirect("/parks");
+		} else {
+			res.redirect("/parks/" + req.params.id);
+		}
+	});
+});
 
 module.exports = router;

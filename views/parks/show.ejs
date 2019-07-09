@@ -1,0 +1,35 @@
+<% include ../layouts/header %>
+
+<div class="container">
+	<div class="row">
+		<div class="col-3">
+			<ul class="list-group">
+				<li class="list-group-item active">Category 1</li>
+				<li class="list-group-item">Category 2</li>
+				<li class="list-group-item">Category 3</li>
+			</ul>
+		</div>
+		<div class="col-9">
+			<div class="card parkCard">
+				<img class="card-img-top" src="<%= park.image %>"/>
+				<div class="card-body">
+					<h3 class="card-title d-inline-block"><%= park.name %></h3>
+					<h5 class="d-inline-block float-right">$<%= park.price %></h2>
+					<p class="card-text"><%= park.description %></p>
+					<a class="btn btn-sm btn-warning" href="/parks/<%= park.id %>/edit">Edit</a>
+					<a class="btn btn-sm btn-danger" href="#">Delete</a>
+				</div>
+			</div>
+			<div class="card my-3">
+				<div class="card-body">
+					<h4 class="card-title d-inline-block">Comments</h4>
+					<a class="btn btn-success d-inline-block float-right" href="#">Add Comment</a>
+					<hr>
+					No Comments
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<% include ../layouts/footer %>
