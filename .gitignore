@@ -1,0 +1,6 @@
+# Goorm
+goorm.manifest
+
+# Dependency directories
+node_modules/
+
