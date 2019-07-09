@@ -1,12 +1,32 @@
 <% include ../layouts/header %>
 
 <div class="container">
-	<div class="jumbotron my-3">
+	<div class="row jumbotron my-3">
 		<div class="container">
 			<h2>
 				Welcome to YelpPark!
 			</h2>
+			<a class="btn btn-primary mt-2" href="/parks/new">Add a New Park</a>
 		</div>
+	</div>
+</div>
+
+<div class="container">
+	<div class="row parkGrid justify-content-between" style="">
+		<% parks.forEach(function(park){ %>
+		<div class="col-3 px-2">
+			<div class="card" style="">
+				<img class="card-img-top img-fluid" src="<%= park.image %>" alt="Card image cap">
+				<div class="card-body">
+					<h5 class="card-title"><%= park.name %></h5>
+					<div class="align-text-bottom">
+						<a href="/parks/<%= park.id %>" class="btn btn-primary align-text-bottom">View Park</a>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<% }); %>
 	</div>
 </div>
 

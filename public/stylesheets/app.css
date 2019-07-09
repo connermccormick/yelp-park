@@ -1,0 +1,8 @@
+.parkGrid > div > .card {
+	height:100%;
+}
+
+	.parkGrid > div > .card > .card-img-top {
+		height: 20vh;
+		object-fit: cover;
+	}

@@ -4,9 +4,11 @@ const express    = require("express"),
 	  mongoose   = require("mongoose"),
 	  Park       = require("./models/park");
 
+
 // Require Routes
 const indexRoutes = require("./routes/index"),
 	  parkRoutes  = require("./routes/parks");
+
 
 // Connect to DB
 mongoose.connect('mongodb://localhost/yelp_park', {
@@ -15,12 +17,16 @@ mongoose.connect('mongodb://localhost/yelp_park', {
 	useCreateIndex: true
 });
 
+// Set some shit
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended:true}));
+app.use(express.static('public'));
+
 
 // Routes
 app.use(indexRoutes);
 app.use("/parks", parkRoutes);
+
 
 // Start Server
 app.listen(3000, function(){

@@ -4,7 +4,13 @@ const express    = require("express"),
 
 // Index
 router.get("/", function(req, res){
-	res.render("parks/index");
+	Park.find({}, function(err, parks){
+		if(err){
+			console.log(err);
+		} else {
+			res.render("parks/index", {parks: parks});
+		}
+	});
 });
 
 // Create 
