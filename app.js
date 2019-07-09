@@ -1,16 +1,28 @@
-const express = require("express"),
-	  app     = express();
+const express    = require("express"),
+	  app        = express(),
+	  bodyParser = require("body-parser"),
+	  mongoose   = require("mongoose"),
+	  Park       = require("./models/park");
 
+// Require Routes
 const indexRoutes = require("./routes/index"),
 	  parkRoutes  = require("./routes/parks");
 
-app.set("view engine", "ejs");
+// Connect to DB
+mongoose.connect('mongodb://localhost/yelp_park', {
+	useNewUrlParser: true,
+	useFindAndModify: false,
+	useCreateIndex: true
+});
 
-//Routes
+app.set("view engine", "ejs");
+app.use(bodyParser.urlencoded({extended:true}));
+
+// Routes
 app.use(indexRoutes);
 app.use("/parks", parkRoutes);
 
-//Start Server
+// Start Server
 app.listen(3000, function(){
 	console.log("YelpPark server is running!");
 });

@@ -4,3 +4,6 @@ goorm.manifest
 # Dependency directories
 node_modules/
 
+# Database
+data/
+mongod
