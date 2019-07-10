@@ -1,17 +1,18 @@
 const express    = require("express"),
 	  router     = express.Router({mergeParams: true}),
 	  Park       = require("../models/park"),
-	  Comment    = require("../models/comment");
+	  Comment    = require("../models/comment"),
+	  middleware = require("../middleware");
 
 // Create 
-router.get("/new", function(req, res){
+router.get("/new", middleware.isLoggedIn, function(req, res){
 	Park.findById(req.params.id, function(err, park){
 		res.render("comments/new", {park: park});
 	});
 });
 
 // Create Logic
-router.post("/", function(req, res){
+router.post("/", middleware.isLoggedIn, function(req, res){
 	Park.findById(req.params.id, function(err, park){
 		if(err){
 			console.log(err);
@@ -31,7 +32,7 @@ router.post("/", function(req, res){
 });
 
 // Destroy
-router.delete("/:comment_id", function(req, res){
+router.delete("/:comment_id", middleware.isLoggedIn, function(req, res){
 	Comment.findByIdAndRemove(req.params.comment_id, function(err){
 		if(err){
 			console.log(err);

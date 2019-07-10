@@ -1,6 +1,7 @@
 const express    = require("express"),
 	  router     = express.Router(),
-	  Park       = require("../models/park");
+	  Park       = require("../models/park"),
+	  middleware = require("../middleware");
 
 // Index
 router.get("/", function(req, res){
@@ -14,12 +15,12 @@ router.get("/", function(req, res){
 });
 
 // Create 
-router.get("/new", function(req, res){
+router.get("/new", middleware.isLoggedIn, function(req, res){
 	res.render("parks/new");
 });
 
 // Create Logic
-router.post("/", function(req, res){
+router.post("/", middleware.isLoggedIn, function(req, res){
 	Park.create(req.body.park, function(err, createdPark){
 		if(err){
 			console.log(err);
@@ -43,7 +44,7 @@ router.get("/:id", function(req, res){
 });
 
 // Edit
-router.get("/:id/edit", function(req, res){
+router.get("/:id/edit", middleware.isLoggedIn, function(req, res){
 	Park.findById(req.params.id, function(err, park){
 		if(err){
 			console.log(err);
@@ -55,7 +56,7 @@ router.get("/:id/edit", function(req, res){
 });
 
 // Update
-router.put("/:id", function(req, res){
+router.put("/:id", middleware.isLoggedIn, function(req, res){
 	Park.findByIdAndUpdate(req.params.id, req.body.park, function(err, park){
 		if(err){
 			console.log(err);
@@ -67,7 +68,7 @@ router.put("/:id", function(req, res){
 });
 
 // Destroy
-router.delete("/:id", function(req, res){
+router.delete("/:id", middleware.isLoggedIn, function(req, res){
 	Park.findByIdAndRemove(req.params.id, function(err){
 		if(err){
 			console.log(err);
