@@ -30,4 +30,14 @@ router.post("/", function(req, res){
 	});
 });
 
+// Destroy
+router.delete("/:comment_id", function(req, res){
+	Comment.findByIdAndRemove(req.params.comment_id, function(err){
+		if(err){
+			console.log(err);
+		} 
+		res.redirect("/parks/" + req.params.id);
+	});
+});
+
 module.exports = router;

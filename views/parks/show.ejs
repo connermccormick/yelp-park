@@ -32,6 +32,9 @@
 						<span><strong><%= comment.author %></strong></span>
 						<span class="float-right">10 days ago</span>
 						<p><%= comment.text %></p>
+						<form class="d-inline-block" action="/parks/<%= park.id %>/comments/<%= comment.id %>?_method=delete" method="POST">
+							<button class="btn btn-sm btn-danger" href="">Delete</a>
+						</form>
 					</div>
 					<% })} else { %>
 					<hr>
