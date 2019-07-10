@@ -21,7 +21,11 @@ router.get("/new", middleware.isLoggedIn, function(req, res){
 
 // Create Logic
 router.post("/", middleware.isLoggedIn, function(req, res){
-	Park.create(req.body.park, function(err, createdPark){
+	var park = new Park(req.body.park);
+	park.author.id = req.user.id;
+	park.author.username = req.user.username;
+	
+	Park.create(park, function(err, createdPark){
 		if(err){
 			console.log(err);
 		} else {
@@ -44,7 +48,7 @@ router.get("/:id", function(req, res){
 });
 
 // Edit
-router.get("/:id/edit", middleware.isLoggedIn, function(req, res){
+router.get("/:id/edit", middleware.checkParkOwnership, function(req, res){
 	Park.findById(req.params.id, function(err, park){
 		if(err){
 			console.log(err);
@@ -56,7 +60,7 @@ router.get("/:id/edit", middleware.isLoggedIn, function(req, res){
 });
 
 // Update
-router.put("/:id", middleware.isLoggedIn, function(req, res){
+router.put("/:id", middleware.checkParkOwnership, function(req, res){
 	Park.findByIdAndUpdate(req.params.id, req.body.park, function(err, park){
 		if(err){
 			console.log(err);
@@ -68,7 +72,7 @@ router.put("/:id", middleware.isLoggedIn, function(req, res){
 });
 
 // Destroy
-router.delete("/:id", middleware.isLoggedIn, function(req, res){
+router.delete("/:id", middleware.checkParkOwnership, function(req, res){
 	Park.findByIdAndRemove(req.params.id, function(err){
 		if(err){
 			console.log(err);

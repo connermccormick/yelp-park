@@ -4,12 +4,12 @@
 	<div class="row text-center">
 		<div class="col-12">
 			<h2 class="my-4">
-				Create a comment on <%= park.name %>
+				Edit comment on <%= park.name %>
 			</h2>
 			<div class="info-form">
-				<form class="col-12 col-md-6 offset-md-3" action="/parks/<%= park.id %>/comments" method="POST">
+				<form class="col-12 col-md-6 offset-md-3" action="/parks/<%= park.id %>/comments/<%= comment.id %>?_method=PUT" method="POST">
 					<div class="form-group">
-						<textarea class="form-control" name="comment[text]" placeholder="comment" rows="5"></textarea>
+						<textarea class="form-control" name="comment[text]" rows="5"><%= comment.text %></textarea>
 					</div>
 					<button class="btn btn-primary form-control" type="submit">Submit</button>
 				</form> 
