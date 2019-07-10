@@ -1,18 +1,16 @@
 <% include ../layouts/header %>
 
 <div class="container">
-	<div class="row jumbotron my-3">
+	<header class="jumbotron mb-3">
 		<div class="container">
 			<h2>
 				Welcome to YelpPark!
 			</h2>
 			<a class="btn btn-primary mt-2" href="/parks/new">Add a New Park</a>
 		</div>
-	</div>
-</div>
-
-<div class="container">
-	<div class="row parkGrid" style="">
+	</header>
+	
+	<div class="row px-2 parkGrid" style="">
 		<% parks.forEach(function(park){ %>
 		<div class="col-3 px-2 mb-3">
 			<div class="card" style="">
@@ -28,5 +26,7 @@
 		<% }); %>
 	</div>
 </div>
+
+	
 
 <% include ../layouts/footer %>

@@ -15,7 +15,7 @@ router.get("/new", middleware.isLoggedIn, function(req, res){
 router.post("/", middleware.isLoggedIn, function(req, res){
 	Park.findById(req.params.id, function(err, park){
 		if(err){
-			console.log(err);
+			req.flash("error", "Unable to add comment");
 			res.redirect("/parks");
 		} else {
 			var newComment = new Comment(req.body.comment);
@@ -24,10 +24,11 @@ router.post("/", middleware.isLoggedIn, function(req, res){
 			
 			Comment.create(newComment, function(err, createdComment){
 				if(err){
-					console.log(err);
+					req.flash("error", "Unable to add comment");
 				} else {
 					park.comments.push(createdComment);
 					park.save();
+					req.flash("success", "Comment added successfully");
 					res.redirect("/parks/" + park.id);
 				}
 			});
@@ -38,10 +39,19 @@ router.post("/", middleware.isLoggedIn, function(req, res){
 // Edit 
 router.get("/:comment_id/edit", middleware.checkCommentOwnership, function(req, res){
 	Park.findById(req.params.id, function(err, park){
+		if(err){
+			res.redirect("/parks");
+			req.flash("error", "Park not found");
+		}
 		Comment.findById(req.params.comment_id, function(err, comment){
+			if(err){
+				req.flash("error", "Comment not found");
+				res.redirect("/parks/"+park.id);
+			}
 			res.render("comments/edit", {park: park, comment: comment});
 		});
 	});
+	
 });
 
 // Update 
@@ -49,7 +59,7 @@ router.put("/:comment_id", middleware.checkCommentOwnership, function(req, res){
 	Park.findById(req.params.id, function(err, park){
 		Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(err, comment){
 			if(err){
-				consol.log(err);
+				req.flash("error", "There was an error updating the comment");
 			}
 			res.redirect("/parks/" + park.id);
 		});
@@ -60,8 +70,9 @@ router.put("/:comment_id", middleware.checkCommentOwnership, function(req, res){
 router.delete("/:comment_id", middleware.checkCommentOwnership, function(req, res){
 	Comment.findByIdAndRemove(req.params.comment_id, function(err){
 		if(err){
-			console.log(err);
+			req.flash("error", "There was an error deleting the comment");
 		} 
+		req.flash("success", "Comment deleted successfully");
 		res.redirect("/parks/" + req.params.id);
 	});
 });

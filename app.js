@@ -2,6 +2,7 @@ const express        = require("express"),
 	  app            = express(),
 	  bodyParser     = require("body-parser"),
 	  methodOverride = require("method-override"),
+	  flash          = require("connect-flash"),
 	  mongoose       = require("mongoose"),
 	  passport       = require("passport"),
 	  localStrategy  = require("passport-local"),
@@ -23,11 +24,12 @@ mongoose.connect('mongodb://localhost/yelp_park', {
 	useCreateIndex: true
 });
 
-// Set some shit
+// Set/Use some shit
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static('public'));
 app.use(methodOverride("_method"));
+app.use(flash());
 
 
 // Passport config
@@ -42,12 +44,14 @@ passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+
+// Locals
 app.use(function(req, res, next){
 	res.locals.currentUser = req.user; 
+	res.locals.success     = req.flash("success");
+	res.locals.error       = req.flash("error");
 	next();
 });
-
-
 
 // Routes
 app.use(indexRoutes);

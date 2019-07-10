@@ -27,9 +27,9 @@ router.post("/", middleware.isLoggedIn, function(req, res){
 	
 	Park.create(park, function(err, createdPark){
 		if(err){
-			console.log(err);
+			req.flash("error", "There was an error creating the new park");
 		} else {
-			console.log(createdPark);
+			req.flash("success", "New park created successfully");
 		}
 		res.redirect("/parks");
 	});
@@ -39,7 +39,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){
 router.get("/:id", function(req, res){
 	Park.findById(req.params.id).populate('comments').exec(function(err, park){
 		if(err){
-			console.log(err);
+			req.flash("error", "Park not found");
 			res.redirect("/parks");
 		} else {
 			res.render("parks/show", {park: park});
@@ -51,7 +51,7 @@ router.get("/:id", function(req, res){
 router.get("/:id/edit", middleware.checkParkOwnership, function(req, res){
 	Park.findById(req.params.id, function(err, park){
 		if(err){
-			console.log(err);
+			req.flash("error", "Park not found");
 			res.redirect("/parks");
 		} else {
 			res.render("parks/edit", {park: park});
@@ -63,9 +63,10 @@ router.get("/:id/edit", middleware.checkParkOwnership, function(req, res){
 router.put("/:id", middleware.checkParkOwnership, function(req, res){
 	Park.findByIdAndUpdate(req.params.id, req.body.park, function(err, park){
 		if(err){
-			console.log(err);
+			req.flash("error", "Unable to update park");
 			res.redirect("/parks");
 		} else {
+			req.flash("success", "Park updated successfully");
 			res.redirect("/parks/" + req.params.id);
 		}
 	});
@@ -75,8 +76,9 @@ router.put("/:id", middleware.checkParkOwnership, function(req, res){
 router.delete("/:id", middleware.checkParkOwnership, function(req, res){
 	Park.findByIdAndRemove(req.params.id, function(err){
 		if(err){
-			console.log(err);
+			req.flash("error", "Unable to delete park");
 		}
+		req.flash("success", "Park deleted successfully");
 		res.redirect("/parks");
 	});
 });
