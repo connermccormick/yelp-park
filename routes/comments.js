@@ -14,7 +14,7 @@ router.get("/new", middleware.isLoggedIn, function(req, res){
 // Create Logic
 router.post("/", middleware.isLoggedIn, function(req, res){
 	Park.findById(req.params.id, function(err, park){
-		if(err){
+		if(err || !park){
 			req.flash("error", "Unable to add comment");
 			res.redirect("/parks");
 		} else {
@@ -23,7 +23,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){
 			newComment.author.id = req.user.id;
 			
 			Comment.create(newComment, function(err, createdComment){
-				if(err){
+				if(err || !createdComment){
 					req.flash("error", "Unable to add comment");
 				} else {
 					park.comments.push(createdComment);
@@ -39,12 +39,12 @@ router.post("/", middleware.isLoggedIn, function(req, res){
 // Edit 
 router.get("/:comment_id/edit", middleware.checkCommentOwnership, function(req, res){
 	Park.findById(req.params.id, function(err, park){
-		if(err){
+		if(err || !park){
 			res.redirect("/parks");
 			req.flash("error", "Park not found");
 		}
 		Comment.findById(req.params.comment_id, function(err, comment){
-			if(err){
+			if(err || !comment){
 				req.flash("error", "Comment not found");
 				res.redirect("/parks/"+park.id);
 			}
