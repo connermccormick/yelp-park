@@ -1,0 +1,26 @@
+<% include ../layouts/header %>
+
+<div class="container">
+	<div class="row text-center">
+		<div class="col-12">
+			<h2 class="my-4">
+				Create a comment on <%= park.name %>
+			</h2>
+			<div class="info-form">
+				<form class="col-12 col-md-6 offset-md-3" action="/parks/<%= park.id %>/comments" method="POST">
+					<div class="form-group">
+						<input type="text" class="form-control" name="comment[author]" placeholder="author">
+					</div>
+					<div class="form-group">
+						<textarea class="form-control" name="comment[text]" placeholder="comment" rows="5"></textarea>
+					</div>
+					<button class="btn btn-primary form-control" type="submit">Submit</button>
+				</form> 
+			</div>
+			
+		</div>
+		
+	</div>
+</div>
+
+<% include ../layouts/footer %>

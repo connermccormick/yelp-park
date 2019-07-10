@@ -32,7 +32,7 @@ router.post("/", function(req, res){
 
 // Read
 router.get("/:id", function(req, res){
-	Park.findById(req.params.id, function(err, park){
+	Park.findById(req.params.id).populate('comments').exec(function(err, park){
 		if(err){
 			console.log(err);
 			res.redirect("/parks");

@@ -25,9 +25,18 @@
 			<div class="card my-3">
 				<div class="card-body">
 					<h4 class="card-title d-inline-block">Comments</h4>
-					<a class="btn btn-success d-inline-block float-right" href="#">Add Comment</a>
+					<a class="btn btn-success d-inline-block float-right" href="/parks/<%= park.id %>/comments/new">Add Comment</a>
+					<% if(park.comments.length > 0){ park.comments.forEach(function(comment){ %>
+					<div>
+						<hr>
+						<span><strong><%= comment.author %></strong></span>
+						<span class="float-right">10 days ago</span>
+						<p><%= comment.text %></p>
+					</div>
+					<% })} else { %>
 					<hr>
-					No Comments
+					<p>No comments</p>
+					<% } %>
 				</div>
 			</div>
 		</div>

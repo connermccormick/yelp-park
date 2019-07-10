@@ -3,12 +3,14 @@ const express        = require("express"),
 	  bodyParser     = require("body-parser"),
 	  methodOverride = require("method-override"),
 	  mongoose       = require("mongoose"),
-	  Park           = require("./models/park");
+	  Park           = require("./models/park"),
+	  Comment        = require("./models/comment");
 
 
 // Require Routes
-const indexRoutes = require("./routes/index"),
-	  parkRoutes  = require("./routes/parks");
+const indexRoutes   = require("./routes/index"),
+	  parkRoutes    = require("./routes/parks"),
+	  commentRoutes = require("./routes/comments");
 
 
 // Connect to DB
@@ -28,6 +30,7 @@ app.use(methodOverride("_method"));
 // Routes
 app.use(indexRoutes);
 app.use("/parks", parkRoutes);
+app.use("/parks/:id/comments", commentRoutes);
 
 
 // Start Server
