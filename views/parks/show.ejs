@@ -16,11 +16,14 @@
 					<h3 class="card-title d-inline-block"><%= park.name %></h3>
 					<h5 class="d-inline-block float-right">$<%= park.price %></h2>
 					<p class="card-text"><%= park.description %></p>
+					<em class='d-block'>Created by <%= park.author.username %></em>
 					<% if(currentUser && park.author.id.equals(currentUser.id)){ %>
-					<a class="btn btn-sm btn-warning" href="/parks/<%= park.id %>/edit">Edit</a>
-					<form class="d-inline-block" action="/parks/<%= park.id %>?_method=delete" method="POST">
-						<button class="btn btn-sm btn-danger" href="">Delete</a>
-					</form>
+					<div class="mt-2">
+						<a class="btn btn-sm btn-warning" href="/parks/<%= park.id %>/edit">Edit</a>
+						<form class="d-inline-block" action="/parks/<%= park.id %>?_method=delete" method="POST">
+							<button class="btn btn-sm btn-danger" href="">Delete</a>
+						</form>
+					</div>
 					<% } %>
 				</div>
 			</div>
